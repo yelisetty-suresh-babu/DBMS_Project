@@ -10,6 +10,7 @@ function AddRecipe() {
   const [procedure, setProcedure] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [temp, setTemp] = useState("");
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     setIngredients(temp.split(","));

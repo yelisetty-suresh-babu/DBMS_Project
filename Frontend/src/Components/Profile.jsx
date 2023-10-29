@@ -2,8 +2,18 @@ import React from "react";
 import Card from "./Card";
 import Horizontal_card from "./Horizontal_card";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/store";
 
 function Profile() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logout = async () => {
+    dispatch(authActions.logout());
+    localStorage.removeItem("userId");
+    navigate("/login");
+  };
+  
   const nav = useNavigate();
   return (
     <>
@@ -31,12 +41,20 @@ function Profile() {
           <Horizontal_card />
           <Horizontal_card />
           <Horizontal_card />
-          <Link
-            to="/addrecipe"
-            className="bg-green-500 px-5 py-3 text-white rounded-xl ml-5 "
-          >
-            Add Recipe
-          </Link>
+          <div className="flex justify-between ">
+            <Link
+              to="/addrecipe"
+              className="bg-green-500 px-5 py-3 text-white rounded-xl ml-5 "
+            >
+              Add Recipe
+            </Link>
+            <button
+              className="bg-red-500 px-4 mx-14 py-3 text-white rounded-xl"
+              onClick={logout}
+            >
+              SignOut
+            </button>
+          </div>
         </div>
       </div>
     </>

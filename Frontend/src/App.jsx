@@ -17,6 +17,7 @@ import Login_Signup from "./Components/Login_Signup";
 import RecipeDisplay from "./Components/RecipeDisplay";
 import Profile from "./Components/Profile";
 import AddRecipe from "./Components/AddRecipe";
+import { requireAuth } from "../utils";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,17 +27,24 @@ const router = createBrowserRouter(
       <Route path="/byingredient" element={<ByIngredient />} />
       <Route path="/login" element={<Login_Signup />} />
       <Route path="/recipe" element={<RecipeDisplay />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/addrecipe" element={<AddRecipe />} />
+      <Route
+        path="/profile"
+        element={<Profile />}
+        loader={async ({ request }) => await requireAuth(request)}
+      />
+      <Route
+        path="/addrecipe"
+        element={
+          <AddRecipe
+            loader={async ({ request }) => await requireAuth(request)}
+          />
+        }
+      />
     </Route>
   )
 );
 function App() {
-  return ( 
-    <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
-
-

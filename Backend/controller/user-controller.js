@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 
 const signUp = async (req, res, next) => {
   const { userName, name, email, password } = req.body;
-  const obj = req.body;
   let existingUser;
 
   try {
