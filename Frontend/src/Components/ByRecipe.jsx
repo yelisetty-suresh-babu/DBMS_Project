@@ -29,7 +29,9 @@ function ByRecipe() {
           <Featured />
           <Featured />
         </>
-      ) : null}
+      ) : (
+        <div className="h-[200px]"></div>
+      )}
     </>
   );
 }

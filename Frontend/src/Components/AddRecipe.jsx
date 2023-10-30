@@ -25,7 +25,7 @@ function AddRecipe() {
         Enter the Details
       </div>
       <div className="flex items-center justify-center">
-        <div className="w-[90%] bg-orange-50 h-fit border-2 rounded-xl">
+        <div className="w-[90%] bg-white h-fit  shadow-xl  rounded-xl">
           <form
             onSubmit={handleSubmit}
             className="flex flex-col  h-full items-start justify-between p-5 font-serif"
@@ -80,7 +80,7 @@ function AddRecipe() {
                 type="text"
                 value={temp}
                 onChange={(e) => setTemp(e.target.value)}
-                className="w-[425%] mx-4 h-16 rounded-xl border-[1px] px-4 pt-4 text-xl text-start border-black"
+                className="w-[413%] mx-4 h-16 rounded-xl border-[1px] px-4 pt-4 text-xl text-start border-black"
                 placeholder="Enter the Ingredients"
                 style={{}}
                 name="url"
@@ -95,7 +95,7 @@ function AddRecipe() {
                 type="text"
                 value={procedure}
                 onChange={(e) => setProcedure(e.target.value)}
-                className="w-[425%] mx-4 h-16 rounded-xl border-[1px] px-4 pt-4 text-xl text-start border-black"
+                className="w-[413%] mx-4 h-16 rounded-xl border-[1px] px-4 pt-4 text-xl text-start border-black"
                 placeholder="Enter the Cooking Procedure"
                 style={{}}
                 name="url"

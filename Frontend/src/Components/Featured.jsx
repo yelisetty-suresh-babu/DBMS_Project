@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "./Card";
 function Featured() {
+  useEffect(()=>
+  {
+    
+  },[]);
   return (
     <>
       <div className="flex items-center justify-center ml-20 ">
