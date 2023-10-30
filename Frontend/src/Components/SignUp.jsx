@@ -4,9 +4,10 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authActions } from "../../store/store";
 function SignUp() {
-  const dispatch=useDispatch()
-  const navigate=useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [name_, setName] = useState("");
+  const [url_, setUrl] = useState("");
   const [userName_, setUserName] = useState("");
   const [email_, setEmail] = useState("");
   const [password_, setPassword] = useState("");
@@ -16,6 +17,7 @@ function SignUp() {
       .post("http://localhost:4000/api/users/signup", {
         userName: userName_,
         name: name_,
+        url: url_,
         email: email_,
         password: password_,
       })
@@ -34,6 +36,7 @@ function SignUp() {
 
     setName("");
     setUserName("");
+    setUrl("");
     setEmail("");
     setPassword("");
   };
@@ -57,6 +60,13 @@ function SignUp() {
             onChange={(e) => setUserName(e.target.value)}
             className="w-[120%] m-3 h-10 rounded-xl border-[1px] p-2 text-center border-black"
             placeholder="Enter the User Name"
+          />
+          <input
+            type="text"
+            value={url_}
+            onChange={(e) => setUrl(e.target.value)}
+            className="w-[120%] m-3 h-10 rounded-xl border-[1px] p-2 text-center border-black"
+            placeholder="Enter the Image Url"
           />
           <input
             type="email"

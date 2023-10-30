@@ -17,7 +17,7 @@ function AddRecipe() {
     console.log(ingredients, procedure);
   };
   return (
-    <Fade bottom className="">
+    <Fade bottom  className="">
       <button className="self-start ml-[3.5%] mb-[2%]" onClick={() => nav(-1)}>
         ← Back
       </button>

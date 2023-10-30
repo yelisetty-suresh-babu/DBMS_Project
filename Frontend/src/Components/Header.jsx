@@ -9,9 +9,7 @@ function Header() {
   const t = () => {
     setShow((show) => show ^ 1);
   };
-  useEffect(() => {
-    console.log(localStorage.getItem("userId"));
-  }, []);
+  useEffect(() => {}, []);
   return (
     <Fade top>
       <div className="flex justify-between px-[50px] py-8">
@@ -23,7 +21,7 @@ function Header() {
             <Link to="/byrecipe">Recipe by Name</Link>
             <Link to="/byingredient">Recipe by Ingredients</Link>
           </div>
-          {isloggedin  ? (
+          {isloggedin ? (
             <Link to="/profile" className="">
               Profile
             </Link>

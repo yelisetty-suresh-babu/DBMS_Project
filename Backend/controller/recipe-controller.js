@@ -58,6 +58,8 @@ const addRecipe = async (req, res, next) => {
 };
 const getById = async (req, res, next) => {
   let { _id } = req.body;
+  console.log(req.params.id);
+  // let { _id } = req.params.id;
   let recipe;
   try {
     recipe = await Recipe.findById(_id);
@@ -70,6 +72,24 @@ const getById = async (req, res, next) => {
     res.status(400).json({ message: "server error" });
   }
 };
+
+const getByIdString = async (req, res, next) => {
+  let { id } = req.params.id;
+  let recipe;
+  try {
+    recipe = await Recipe.findById(req.params.id);
+
+    if (!recipe) {
+      return res
+        .status(201)
+        .json({ message: "no recipe is found", id: "string" });
+    }
+    return res.status(200).json(recipe);
+  } catch (e) {
+    res.status(400).json({ message: "server error" });
+  }
+};
+
 const getRecipeByName = async (req, res, next) => {
   let { Name } = req.body;
   let recipe;
@@ -136,4 +156,5 @@ module.exports = {
   getRecipeByName,
   deleteRecipeByName,
   getRecipeByIngredients,
+  getByIdString,
 };

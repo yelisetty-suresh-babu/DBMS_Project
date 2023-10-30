@@ -18,6 +18,7 @@ import RecipeDisplay from "./Components/RecipeDisplay";
 import Profile from "./Components/Profile";
 import AddRecipe from "./Components/AddRecipe";
 import { requireAuth } from "../utils";
+import Featured from "./Components/Featured";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,7 +27,8 @@ const router = createBrowserRouter(
       <Route path="/byrecipe" element={<ByRecipe />} />
       <Route path="/byingredient" element={<ByIngredient />} />
       <Route path="/login" element={<Login_Signup />} />
-      <Route path="/recipe" element={<RecipeDisplay />} />
+      <Route path="/recipe/:id" element={<RecipeDisplay />} />
+      <Route path="/featured" element={<Featured />} />
       <Route
         path="/profile"
         element={<Profile />}

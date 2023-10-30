@@ -1,9 +1,26 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Fade } from "react-reveal";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function RecipeDisplay() {
+  const [recipe, setRecipe] = useState({});
+  const [loading, setLoading] = useState(false);
   const nav = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setLoading(true);
+    const str = `http://localhost:4000/api/recipes/${id}`;
+    const temp = async () => {
+      const res = await axios.get(str);
+      console.log(res.data);
+      setRecipe(res.data);
+    };
+    temp();
+    setLoading(false);
+  }, []);
   return (
     <>
       <div className="flex flex-col items-center justify-center font-serif ">
@@ -15,28 +32,38 @@ function RecipeDisplay() {
         </button>
         <Fade bottom big className="flex justify-around items-center w-screen">
           <img
-            src="/photos/chicken_tikka.jpeg "
+            // src="/photos/chicken_tikka.jpeg "
+            src={recipe.url}
             className="h-[600px] w-[75%]  rounded-2xl shadow-xl"
           />
 
           <div className="flex items-center justify-around gap-x-4 p-5 w-[75%] mt-5 mb-5 ">
             <div className="flex flex-col">
               <div className="flex items-center">
-                <img src="photos/time.gif" className="h-[60px] mr-1 " />
+                <img
+                  src="../../public/photos/time.gif"
+                  className="h-[60px] mr-1 "
+                />
                 <p>5 min</p>
               </div>
               <p className="self-center text-lg ml-2">Prep Time</p>
             </div>
             <div className="flex flex-col">
               <div className="flex items-center">
-                <img src="photos/total_time.gif" className="h-[60px] mr-1 " />
+                <img
+                  src="../../public/photos/total_time.gif"
+                  className="h-[60px] mr-1 "
+                />
                 <p>20 min</p>
               </div>
               <p className="self-center text-lg ml-2">Total Time</p>
             </div>
 
             <div className="flex flex-col">
-              <img src="photos/people.gif" className="h-[70px] mr-1 " />
+              <img
+                src="../../public/photos/people.gif"
+                className="h-[70px] mr-1 "
+              />
               <div className="flex items-center">
                 <p>5</p>
                 <p className="self-center text-lg ml-1 ">-Servings</p>
@@ -44,16 +71,17 @@ function RecipeDisplay() {
             </div>
 
             <div className="flex flex-col">
-              <img src="photos/cal.gif" className="h-[70px] mr-1 " />
+              <img
+                src="../../public/photos/cal.gif"
+                className="h-[70px] mr-1 "
+              />
               <p className="self-center text-xl">500</p>
             </div>
           </div>
 
           <div className=" w-[75%] mt-3 mb-3">
             <div className="self-start">
-              <p className=" text-3xl font-extrabold mb-2">
-                Name of the recipe
-              </p>
+              <p className=" text-3xl font-extrabold mb-2">{recipe.Name}</p>
               <p className="text-xl font-semibold">Non-Veg</p>
             </div>
           </div>

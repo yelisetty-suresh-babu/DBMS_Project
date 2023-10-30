@@ -2,7 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
 const signUp = async (req, res, next) => {
-  const { userName, name, email, password } = req.body;
+  const { userName, name, url, email, password } = req.body;
   let existingUser;
 
   try {
@@ -18,6 +18,7 @@ const signUp = async (req, res, next) => {
   const user = new User({
     userName,
     name,
+    url,
     email,
     password: hashedPassword,
     blogs: [],

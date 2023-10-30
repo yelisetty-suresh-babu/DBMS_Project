@@ -7,6 +7,7 @@ const recipeSchema = new Schema(
     Name: {
       type: String,
       required: true,
+      unique: true,
     },
     url: {
       type: String,
