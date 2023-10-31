@@ -1,19 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import Horizontal_card from "./Horizontal_card";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/store";
+import axios from "axios";
 
 function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [recipes, setRecipes] = useState([]);
   const logout = async () => {
     dispatch(authActions.logout());
     localStorage.removeItem("userId");
     navigate("/login");
   };
-  
+  useEffect(() => {
+    const temp = async () => {
+      setLoading(true);
+      const res = await axios.get("http://localhost:4000/api/recipes/");
+      console.log(res.data.recipes.slice(0, 5));
+      setRecipes(res.data.recipes.slice(0, 5));
+      setLoading(false);
+    };
+    temp();
+  }, []);
+
   const nav = useNavigate();
   return (
     <>
@@ -37,10 +50,23 @@ function Profile() {
         </div>
         <hr className="w-[80%] self-center " />
         <div className="self-center">
+          {/* components */}
+          {/* <Horizontal_card />
           <Horizontal_card />
           <Horizontal_card />
-          <Horizontal_card />
-          <Horizontal_card />
+          <Horizontal_card /> */}
+
+          {recipes.length
+            ? recipes.map((data) => {
+                return (
+                  <Horizontal_card
+                    key={data._id}
+                    name={data.Name}
+                    val={data._id}
+                  />
+                );
+              })
+            : null}
           <div className="flex justify-between ">
             <Link
               to="/addrecipe"

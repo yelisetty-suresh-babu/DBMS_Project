@@ -32,13 +32,13 @@ const router = createBrowserRouter(
       <Route
         path="/profile"
         element={<Profile />}
-        loader={async ({ request }) => await requireAuth(request)}
+        // loader={async ({ request }) => await requireAuth(request)}
       />
       <Route
         path="/addrecipe"
         element={
           <AddRecipe
-            loader={async ({ request }) => await requireAuth(request)}
+          // loader={async ({ request }) => await requireAuth(request)}
           />
         }
       />

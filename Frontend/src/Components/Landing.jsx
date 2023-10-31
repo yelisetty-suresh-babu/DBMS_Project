@@ -7,7 +7,7 @@ function Landing() {
   return (
     <div className="flex flex-col gap-10  items-center ">
       <Special />
-      <Featured />
+      {/* <Featured /> */}
       {/* <Featured /> */}
     </div>
   );

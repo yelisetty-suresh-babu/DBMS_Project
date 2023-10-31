@@ -18,10 +18,10 @@ const getAllRecipe = async (req, res, next) => {
 };
 
 const addRecipe = async (req, res, next) => {
-  const { Name, url, type, ingredients, procedure, user_, date } = req.body;
+  const { Name, url, type, ingredients, procedure, user, date } = req.body;
   const currentDate = new Date();
 
-  const user = "653d015bf9a335aee5184110";
+  // const user = "653d015bf9a335aee5184110";
   let existingUser;
 
   try {

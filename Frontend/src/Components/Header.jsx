@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 function Header() {
   const [show, setShow] = useState(false);
-  const isloggedin = useSelector((state) => state.isLoggedIn);
+
   const t = () => {
     setShow((show) => show ^ 1);
   };
@@ -21,7 +21,7 @@ function Header() {
             <Link to="/byrecipe">Recipe by Name</Link>
             <Link to="/byingredient">Recipe by Ingredients</Link>
           </div>
-          {isloggedin ? (
+          {localStorage.getItem("userId") ? (
             <Link to="/profile" className="">
               Profile
             </Link>

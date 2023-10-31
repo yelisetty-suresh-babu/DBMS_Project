@@ -18,7 +18,7 @@ const signUp = async (req, res, next) => {
   const user = new User({
     userName,
     name,
-    url,
+    // url,
     email,
     password: hashedPassword,
     blogs: [],
