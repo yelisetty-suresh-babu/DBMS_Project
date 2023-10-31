@@ -1,23 +1,51 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Fade } from "react-reveal";
 import { useNavigate } from "react-router-dom";
 
 function AddRecipe() {
   const nav = useNavigate();
   const [name, setName] = useState("");
-  const [url, setUrl] = useState("");
+  const [url_, setUrl] = useState("");
   const [stat, setStat] = useState("");
-  const [procedure, setProcedure] = useState("");
-  const [ingredients, setIngredients] = useState([]);
+  const [procedure_, setProcedure] = useState("");
+  const [ingredients_, setIngredients] = useState([]);
   const [temp, setTemp] = useState("");
-  
+  const [submit, setSubmit] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     setIngredients(temp.split(","));
-    console.log(ingredients, procedure);
+
+    setSubmit(true);
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    const temp = async () => {
+
+      if (!url_) {
+        console.error("URL is required.");
+        return;
+      }
+      const t = url_;
+      const res = await axios.post("http://localhost:4000/api/recipes/add", {
+        Name: name,
+        url: t,
+        type: stat,
+        ingredients: ingredients_,
+        procedure: procedure_,
+        user: localStorage.getItem("userId"),
+      });
+      console.log(res);
+    };
+    temp();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submit]);
+
   return (
-    <Fade bottom  className="">
+    <Fade bottom className="">
       <button className="self-start ml-[3.5%] mb-[2%]" onClick={() => nav(-1)}>
         ← Back
       </button>
@@ -31,7 +59,7 @@ function AddRecipe() {
             className="flex flex-col  h-full items-start justify-between p-5 font-serif"
           >
             <div className="mb-5">
-              <p htmlFor="url" className="ml-5 m-4 text-2xl ">
+              <p htmlFor="Name" className="ml-5 m-4 text-2xl ">
                 Name of the Dish
               </p>
               <input
@@ -40,7 +68,7 @@ function AddRecipe() {
                 onChange={(e) => setName(e.target.value)}
                 className="w-[425%] mx-4 h-16 rounded-xl border-[1px] px-4 text-xl text-start border-black"
                 placeholder="Enter the name"
-                name="url"
+                name="Name"
               />
             </div>
 
@@ -50,7 +78,7 @@ function AddRecipe() {
               </p>
               <input
                 type="text"
-                value={url}
+                value={url_}
                 onChange={(e) => setUrl(e.target.value)}
                 className="w-[425%] mx-4 h-16 rounded-xl border-[1px] px-4 text-xl text-start border-black"
                 placeholder="Enter the Url"
@@ -59,7 +87,7 @@ function AddRecipe() {
             </div>
 
             <div className="mb-7">
-              <p htmlFor="url" className="ml-5 m-4 text-2xl">
+              <p htmlFor="Veg" className="ml-5 m-4 text-2xl">
                 Veg or Non-Veg
               </p>
               <input
@@ -68,12 +96,12 @@ function AddRecipe() {
                 onChange={(e) => setStat(e.target.value)}
                 className="w-[425%] mx-4 h-16 rounded-xl border-[1px] px-4 text-xl text-start border-black"
                 placeholder="Enter the Option"
-                name="url"
+                name="Veg"
               />
             </div>
 
             <div className="mb-7">
-              <p htmlFor="url" className="ml-5 m-4 text-2xl">
+              <p htmlFor="Ingredients" className="ml-5 m-4 text-2xl">
                 Ingredients
               </p>
               <textarea
@@ -82,23 +110,22 @@ function AddRecipe() {
                 onChange={(e) => setTemp(e.target.value)}
                 className="w-[413%] mx-4 h-16 rounded-xl border-[1px] px-4 pt-4 text-xl text-start border-black"
                 placeholder="Enter the Ingredients"
-                style={{}}
-                name="url"
+                name="Ingredients"
               />
             </div>
 
             <div className="mb-7">
-              <p htmlFor="url" className="ml-5 m-4 text-2xl">
+              <p htmlFor="Procedure" className="ml-5 m-4 text-2xl">
                 Cooking Procedure
               </p>
               <textarea
                 type="text"
-                value={procedure}
+                value={procedure_}
                 onChange={(e) => setProcedure(e.target.value)}
                 className="w-[413%] mx-4 h-16 rounded-xl border-[1px] px-4 pt-4 text-xl text-start border-black"
                 placeholder="Enter the Cooking Procedure"
                 style={{}}
-                name="url"
+                name="Procedure"
               />
             </div>
 

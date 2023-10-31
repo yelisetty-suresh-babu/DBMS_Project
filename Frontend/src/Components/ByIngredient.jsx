@@ -1,20 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Featured from "./Featured";
 import { Bounce, Fade } from "react-reveal";
+import axios from "axios";
+import Card from "./Card";
 
 function ByIngredient() {
   const [text, setText] = useState("");
-  const [click, setClick] = useState(false);
+  const [recipes, setRecipes] = useState([]);
+  const [submit, setSubmit] = useState(false);
+  const [ingredients, setIngredients] = useState([]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    setClick((click) => click ^ 1);
+    let arr = text.split(",");
+    arr = arr.map((str) => str.trim());
+    setIngredients(arr);
+    setSubmit(true);
   };
+  useEffect(() => {
+    const temp = async () => {
+      const res = await axios.post(
+        "http://localhost:4000/api/recipes/ingredient",
+        {
+          ingredient: ingredients,
+        }
+      );
+      console.log(res.data);
+      setRecipes(res.data);
+    };
+    temp();
+  }, [ingredients]);
   return (
     <>
       <form
         onSubmit={handleSubmit}
         className="flex items-center justify-center m-10 gap-x-2 fade-up-element "
-
       >
         <input
           type="text"
@@ -25,12 +44,22 @@ function ByIngredient() {
           name="temp_val"
         />
       </form>
-      {click ? (
+      {submit ? (
         <>
-          <Featured />
-          <Featured />
+          {recipes.map((data) => {
+            return (
+              <Card
+                key={data._id}
+                Name={data.Name}
+                url={data.url}
+                val={data._id}
+              />
+            );
+          })}
         </>
-      ) : <div className="h-[200px]"></div>}
+      ) : (
+        <div className="h-[200px]"></div>
+      )}
     </>
   );
 }

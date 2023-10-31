@@ -16,11 +16,12 @@ const getAllRecipe = async (req, res, next) => {
 
   return res.status(200).json({ recipes });
 };
+
 const addRecipe = async (req, res, next) => {
-  const { Name, url, type, ingredients, procedure, user, date } = req.body;
+  const { Name, url, type, ingredients, procedure, user_, date } = req.body;
   const currentDate = new Date();
 
-  Name_lower = Name.toLowerCase();
+  const user = "653d015bf9a335aee5184110";
   let existingUser;
 
   try {
@@ -35,7 +36,7 @@ const addRecipe = async (req, res, next) => {
   }
 
   const recipe = new Recipe({
-    Name: Name_lower,
+    Name,
     url,
     type,
     ingredients,
@@ -56,6 +57,7 @@ const addRecipe = async (req, res, next) => {
     return res.status(500).json({ message: "cannot add the recipe" });
   }
 };
+
 const getById = async (req, res, next) => {
   let { _id } = req.body;
   console.log(req.params.id);

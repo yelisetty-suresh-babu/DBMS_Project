@@ -1,14 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Featured from "./Featured";
 import { Fade } from "react-reveal";
+import axios from "axios";
+import Card from "./Card";
 
 function ByRecipe() {
   const [text, setText] = useState("");
-  const [click, setClick] = useState(false);
+  const [recipes, setRecipes] = useState([]);
+  const [submit, setSubmit] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    setClick((click) => click ^ 1);
+    setSubmit(true);
   };
+  useEffect(() => {
+    const temp = async () => {
+      const res = await axios.post("http://localhost:4000/api/recipes/name", {
+        Name: text,
+      });
+      setRecipes(res.data);
+      console.log(res.data);
+    };
+    temp();
+  }, [submit]);
   return (
     <>
       <form
@@ -24,10 +37,19 @@ function ByRecipe() {
           name="temp_val"
         />
       </form>
-      {click ? (
+      {submit ? (
         <>
-          <Featured />
-          <Featured />
+          {/* <Featured /> */}
+          {recipes.map((data) => {
+            return (
+              <Card
+                key={data._id}
+                Name={data.Name}
+                url={data.url}
+                val={data._id}
+              />
+            );
+          })}
         </>
       ) : (
         <div className="h-[200px]"></div>
