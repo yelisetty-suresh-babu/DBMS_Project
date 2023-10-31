@@ -12,7 +12,7 @@ const {
 
 recipeRouter.get("/", getAllRecipe);
 recipeRouter.post("/add", addRecipe);
-// recipeRouter.put("/update/:id",  updateBlog);
+// recipeRouter.put("/update/:id",  updateRecipe);
 recipeRouter.get("/id", getById);
 recipeRouter.get("/:id", getByIdString);
 recipeRouter.post("/name", getRecipeByName);
