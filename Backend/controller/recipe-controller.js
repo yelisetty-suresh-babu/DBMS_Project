@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const Recipe = require("../models/Recipe");
 const User = require("../models/User");
+
 const getAllRecipe = async (req, res, next) => {
   let recipes;
   try {
@@ -96,7 +97,10 @@ const getRecipeByName = async (req, res, next) => {
   let { Name } = req.body;
   let recipe;
   try {
-    recipe = await Recipe.find({ Name: Name });
+    recipe = await Recipe.find({
+      // Name: Name
+      Name: { $regex: Name, $options: "i" },
+    });
 
     if (!recipe) {
       return res.status(201).json({ message: "no recipe is found" });
@@ -109,6 +113,9 @@ const getRecipeByName = async (req, res, next) => {
 
 const deleteRecipeByName = async (req, res, next) => {
   let { Name } = req.body;
+  // console.log("delete request");
+  // console.log(req.body);
+  // return res.json(req.body);
   try {
     const result = await Recipe.deleteOne({ Name: Name });
 
@@ -130,12 +137,17 @@ const deleteRecipeByName = async (req, res, next) => {
     });
   }
 };
-const updateRecipe = async () => {};
+
 const getRecipeByIngredients = async (req, res, next) => {
-  const { arr: ingredient } = req.body;
+  // const { arr: ingredient } = req.body;
+  const regexIngredients = req.body.ingredient.map(
+    (ingredient) => new RegExp(ingredient, "i")
+  );
+
   try {
     const recipes = await Recipe.find({
-      ingredients: { $in: req.body.ingredient },
+      // ingredients: { $in: req.body.ingredient },
+      ingredients: { $in: regexIngredients },
     });
 
     if (recipes.length > 0) {
@@ -151,6 +163,42 @@ const getRecipeByIngredients = async (req, res, next) => {
   }
 };
 
+const updateRecipe = async (req, res, next) => {
+  const { Name, url, type, ingredients, procedure } = req.body;
+
+  let { id } = req.params.id;
+  let recipe;
+  try {
+    recipe = await Recipe.updateOne(
+      { _id: req.params.id },
+      {
+        $set: {
+          Name,
+          url,
+          type,
+          ingredients,
+          procedure,
+        },
+      }
+    );
+
+    if (recipe.modifiedCount === 1) {
+      res.status(200).json({ msg: "Recipe updated successfully" });
+    } else {
+      res.status(404).json(recipe);
+    }
+
+    // if (!recipe) {
+    //   return res
+    //     .status(201)
+    //     .json({ message: "no recipe is found", id: "string" });
+    // }
+    // return res.status(200).json(recipe);
+  } catch (e) {
+    res.status(400).json({ message: "server error" });
+  }
+};
+
 module.exports = {
   getAllRecipe,
   addRecipe,
@@ -159,4 +207,5 @@ module.exports = {
   deleteRecipeByName,
   getRecipeByIngredients,
   getByIdString,
+  updateRecipe,
 };

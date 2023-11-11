@@ -18,10 +18,10 @@ const signUp = async (req, res, next) => {
   const user = new User({
     userName,
     name,
-    // url,
+    url,
     email,
     password: hashedPassword,
-    blogs: [],
+    recipes: [],
   });
 
   try {
@@ -29,6 +29,21 @@ const signUp = async (req, res, next) => {
     return res.status(201).json({ user });
   } catch (e) {
     console.log(e);
+  }
+};
+const getUserAndRecipes = async (req, res) => {
+  const { _id } = req.body;
+  let user;
+  try {
+    user = await User.findById(_id).populate("recipes");
+    if (!user) {
+      return res.status(400).json({ message: "no user found" });
+    } else {
+      return res.status(200).json({ user });
+    }
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 const getUser = async (req, res, next) => {
@@ -47,6 +62,24 @@ const getUser = async (req, res, next) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
+const getUserById = async (req, res, next) => {
+  const { _id } = req.body;
+
+  try {
+    const user = await User.findById(req.body);
+
+    if (user) {
+      return res.status(200).json({ user });
+    } else {
+      return res.status(404).json({ error: "User not found" });
+    }
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 const getAllUsers = async (req, res, next) => {
   try {
     const user = await User.find({});
@@ -85,4 +118,11 @@ const logIn = async (req, res, next) => {
   return res.status(200).json({ user: existingUser });
 };
 
-module.exports = { signUp, getUser, getAllUsers, logIn };
+module.exports = {
+  signUp,
+  getUser,
+  getAllUsers,
+  logIn,
+  getUserAndRecipes,
+  getUserById,
+};

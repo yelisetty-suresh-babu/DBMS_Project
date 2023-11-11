@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/store";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ function Login() {
   const navigate = useNavigate();
   const [email_, setEmail] = useState("");
   const [password_, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const login = async () => {
     await axios
@@ -20,8 +21,14 @@ function Login() {
         console.log(res.data);
       })
       .then(() => dispatch(authActions.login()))
-      .then(() => navigate("/profile"))
-      .catch((e) => console.log(e));
+      .then(() => {
+        navigate("/profile", { replace: true });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log("Wrong Password");
+        setError("Wrong Password");
+      });
   };
   const t = (e) => {
     e.preventDefault();
@@ -31,6 +38,15 @@ function Login() {
     setEmail("");
     setPassword("");
   };
+  useEffect(() => {
+    const hasReloaded = localStorage.getItem("login");
+    localStorage.removeItem("profile");
+    if (!hasReloaded) {
+      // Reload the page only once
+      localStorage.setItem("login", "true");
+      window.location.reload();
+    }
+  }, []);
   return (
     <>
       <div className="mr-36">
@@ -49,9 +65,14 @@ function Login() {
             type="password"
             value={password_}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-[120%] m-3 h-10 rounded-xl border-[1px] p-2 text-center border-black"
+            className="w-[120%] m-3 h-10 rounded-xl  border-[1px] p-2 text-center border-black"
             placeholder="Enter the Password"
           />
+          {error ? (
+            <h1 className="ml-14 self-center text-lg font-bold text-red-600 animate-bounce ">
+              {error + " ?"}
+            </h1>
+          ) : null}
           <button
             type="submit"
             className="ml-12 w-[200px] inline-block px-5 py-2 mt-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 "

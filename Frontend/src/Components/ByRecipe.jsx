@@ -39,17 +39,18 @@ function ByRecipe() {
       </form>
       {submit ? (
         <>
-          {/* <Featured /> */}
-          {recipes.map((data) => {
-            return (
-              <Card
-                key={data._id}
-                Name={data.Name}
-                url={data.url}
-                val={data._id}
-              />
-            );
-          })}
+          <div className="grid grid-cols-3 self-center ml-10">
+            {recipes.map((data) => {
+              return (
+                <Card
+                  key={data._id}
+                  Name={data.Name}
+                  url={data.url}
+                  val={data._id}
+                />
+              );
+            })}
+          </div>
         </>
       ) : (
         <div className="h-[200px]"></div>

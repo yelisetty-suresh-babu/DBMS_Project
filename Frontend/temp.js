@@ -15,7 +15,7 @@ async function getRecipesByName(recipeName) {
 }
 
 async function getRecipeInformation(recipeId) {
-  const url = `https://api.spoonacular.com/recipes/${633650}/information?apiKey=${API_KEY}`;
+  const url = `https://api.spoonacular.com/recipes/${634191}/information?apiKey=${API_KEY}`;
   //   const response = await fetch(url);
   //   const data = await response.json();
   //   return data;
@@ -27,7 +27,8 @@ async function getRecipeInformation(recipeId) {
     });
 }
 
-console.log(getRecipeInformation("samosa"));
+console.log(getRecipeInformation("curd"));
+// console.log(getRecipesByName("icecream"));
 
 // rl.question('Enter the recipe name: ', async (recipeName) => {
 //     const recipeData = await getRecipesByName(recipeName);
@@ -71,4 +72,38 @@ console.log(getRecipeInformation("samosa"));
 //         console.log(`No recipes found with the name: ${recipeName}`);
 //     }
 //     rl.close();
+// });
+
+// // const axios = require('axios');
+// import axios from "axios";
+// import readline from "readline";
+// import process from "process";
+
+// const rl = readline.createInterface({
+//   input: process.stdin,
+//   output: process.stdout,
+// });
+
+// rl.question("Enter a recipe query: ", function (query) {
+//   const apiKey = "c70rb3uXDARiI9/uabi+xA==RBG04OIzqsOg0lGV";
+//   const url = `https://api.api-ninjas.com/v1/recipe?query=${query}`;
+
+//   axios
+//     .get(url, {
+//       headers: {
+//         "X-Api-Key": apiKey,
+//       },
+//     })
+//     .then(function (response) {
+//       console.log(response.data);
+//       rl.close();
+//     })
+//     .catch(function (error) {
+//       console.error("Error:", error.response.data);
+//       rl.close();
+//     });
+// });
+
+// rl.on("close", function () {
+//   process.exit(0);
 // });

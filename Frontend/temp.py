@@ -14,16 +14,13 @@ def get_recipe_information(recipe_id):
     data = response.json()
     return data
 
-if __name__ == "_main_":
+if __name__ == "__main__":  # Use double underscores for "__main__" instead of "_main_"
     recipe_name = input("Enter the recipe name: ")
-    recipe_data = get_recipes_by_name(recipe_name)
+    recipe_data = get_recipes_by_name(recipe_name)  # Use the user input for the recipe name
     if recipe_data['results']:
-        print(f"Recipes found with the name '{recipe_name}':")
-        print()
-        print()
+        print(f"Recipes found with the name '{recipe_name}':\n")
         for result in recipe_data['results']:
             print("Title:", result['title'])
-            print()
             recipe_info = get_recipe_information(result['id'])
             if recipe_info:
                 print("Image: ", recipe_info['image'])
@@ -31,11 +28,9 @@ if __name__ == "_main_":
                 print("Ready in Minutes:", recipe_info['readyInMinutes'])
                 print("Servings:", recipe_info['servings'])
                 print("Dish Types:", ", ".join(recipe_info['dishTypes']))
-                print()
-                print("Ingredients:")
-                print()
+                print("Ingredients:\n")
                 for ingredient in recipe_info['extendedIngredients']:
-                    print(ingredient['name'])
+                    print(ingredient['original'])
                 print()
                 if 'analyzedInstructions' in recipe_info and recipe_info['analyzedInstructions'] and recipe_info['analyzedInstructions'][0]['steps']:
                     print("Recipe Steps:")
@@ -46,7 +41,6 @@ if __name__ == "_main_":
                     print(recipe_info['instructions'])
                 else:
                     print("Recipe steps not found.")
-                #print("Author/Creator:", recipe_info['creditsText'])
                 print()
     else:
         print(f"No recipes found with the name: {recipe_name}")

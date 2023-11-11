@@ -26,7 +26,7 @@ function SignUp() {
         console.log(res.data);
       })
       .then(() => dispatch(authActions.login()))
-      .then(() => navigate("/profile"))
+      .then(() => navigate("/profile", { replace: true }))
       .catch((e) => console.log(e));
   };
   const t = (e) => {

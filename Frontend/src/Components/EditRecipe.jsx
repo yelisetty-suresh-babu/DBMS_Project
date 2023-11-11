@@ -1,51 +1,99 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Fade } from "react-reveal";
-import { useNavigate } from "react-router-dom";
+import { json, useLoaderData, useNavigate } from "react-router-dom";
 
-function AddRecipe() {
+export function loader({ params }) {
+  const id = params.id;
+  const str = `http://localhost:4000/api/recipes/${id}`;
+  return axios.get(str);
+}
+function EditRecipe() {
   const nav = useNavigate();
   const [name, setName] = useState("");
   const [url_, setUrl] = useState("");
   const [stat, setStat] = useState("");
   const [procedure_, setProcedure] = useState("");
   const [ingredients_, setIngredients] = useState([]);
-  // const [temp, setTemp] = useState("");
+  const [temp, setTemp] = useState("");
   const [submit, setSubmit] = useState(false);
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-
-    setSubmit(true);
-  };
+  //   setSubmit((val) => val ^ 1);
+  // };
+  const loaderData = useLoaderData();
   useEffect(() => {
+    console.log(loaderData);
     window.scrollTo(0, 0);
+    setName(loaderData.data.Name);
+    setUrl(loaderData.data.url);
+    setStat(loaderData.data.type);
+    setProcedure(loaderData.data.procedure);
+    setIngredients(loaderData.data.ingredients);
   }, []);
 
-  useEffect(() => {
+  // useEffect(() => {
+  // const temp = async () => {
+  //   axios
+  //     .patch(
+  //       `http://localhost:4000/api/recipes/edit/${loaderData.data._id}`,
+  //       {
+  //         Name: name,
+  //         url: url_,
+  //         type: stat,
+  //         ingredients: ingredients_,
+  //         procedure: procedure_,
+  //         user: localStorage.getItem("userId"),
+  //       }
+  //     )
+  //     .then(() => {
+  //       nav(`/recipe/${loaderData.data._id}`);
+  //       // console.log(res);
+  //     });
+  //   // console.log(res);
+  //   // nav("")
+  // };
+  // temp();
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const temp = async () => {
-     
-      const t = url_;
       axios
-        .post("http://localhost:4000/api/recipes/add", {
-          Name: name,
-          url: t,
-          type: stat,
-          ingredients: ingredients_,
-          procedure: procedure_,
-          user: localStorage.getItem("userId"),
-        })
-        .then((res) => {
-          nav(`/recipe/${res.data.recipe._id}`);
+        .patch(
+          `http://localhost:4000/api/recipes/edit/${loaderData.data._id}`,
+          {
+            Name: name,
+            url: url_,
+            type: stat,
+            ingredients: ingredients_,
+            procedure: procedure_,
+          }
+        )
+        .then(() => {
+          nav(`/recipe/${loaderData.data._id}`, { replace: true });
           // console.log(res);
         });
-      // console.log(res);
-      // nav("")
+
+      console.log({
+        Name: name,
+        url: url_,
+        type: stat,
+        ingredients: ingredients_,
+        procedure: procedure_,
+      });
     };
     temp();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [submit]);
+  };
 
+  useEffect(() => {}, []);
+  // return (
+  //   <>
+  //     <p>Recipe Edit page</p>
+  //   </>
+  // );
   return (
     <Fade bottom className="">
       <button className="self-start ml-[3.5%] mb-[2%]" onClick={() => nav(-1)}>
@@ -54,12 +102,9 @@ function AddRecipe() {
       <div className="self-start ml-[3.5%] mb-[2%] text-3xl font-serif">
         Enter the Details
       </div>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center ">
         <div className="w-[90%] bg-white h-fit  shadow-xl  rounded-xl">
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col  h-full items-start justify-between p-5 font-serif"
-          >
+          <form className="flex flex-col  h-full items-start justify-between p-5 font-serif">
             <div className="mb-5">
               <p htmlFor="Name" className="ml-5 m-4 text-2xl ">
                 Name of the Dish
@@ -110,7 +155,7 @@ function AddRecipe() {
                 type="text"
                 value={ingredients_}
                 onChange={(e) => setIngredients(e.target.value)}
-                className="w-[413%] mx-4 h-16 rounded-xl border-[1px] px-4 pt-4 text-xl text-start border-black"
+                className="w-[413%] mx-4 h-16  rounded-xl border-[1px] px-4 pt-4 text-xl text-start border-black "
                 placeholder="Enter the Ingredients"
                 name="Ingredients"
               />
@@ -126,13 +171,13 @@ function AddRecipe() {
                 onChange={(e) => setProcedure(e.target.value)}
                 className="w-[413%] mx-4 h-16 rounded-xl border-[1px] px-4 pt-4 text-xl text-start border-black"
                 placeholder="Enter the Cooking Procedure"
-                style={{}}
                 name="Procedure"
               />
             </div>
 
             <button
-              type="submit"
+              // type="submit"
+              onClick={handleSubmit}
               className="ml-4 w-[200px] inline-block px-2 py-2 mt-2 text-white bg-blue-600 rounded-xl hover:bg-blue-700 "
             >
               Proceed
@@ -144,4 +189,4 @@ function AddRecipe() {
   );
 }
 
-export default AddRecipe;
+export default EditRecipe;
