@@ -12,7 +12,8 @@ function Featured() {
   useEffect(() => {
     const recipe = async () => {
       setLoading(true);
-      const res = await axios.get("http://localhost:4000/api/recipes/");
+      // const res = await axios.get("http://localhost:4000/api/recipes/");
+      const res = await axios.get("https://dbms-project-e4a5.onrender.com/api/recipes/");
       // const data = ;
       console.log(res.data.recipes);
       setRecipe(res.data.recipes);

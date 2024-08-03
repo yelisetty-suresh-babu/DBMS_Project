@@ -9,7 +9,8 @@ import { requireAuth } from "../../utils";
 // eslint-disable-next-line react-refresh/only-export-components
 export function loader() {
   if (requireAuth()) {
-    return axios.post("http://localhost:4000/api/users/userRecipes", {
+    // return axios.post("http://localhost:4000/api/users/userRecipes", {
+    return axios.post("https://dbms-project-e4a5.onrender.com/api/users/userRecipes", {
       _id: localStorage.getItem("userId"),
     });
   } else {

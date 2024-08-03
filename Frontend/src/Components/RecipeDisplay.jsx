@@ -5,7 +5,8 @@ import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 
 export function loader({ params }) {
   const id = params.id;
-  const str = `http://localhost:4000/api/recipes/${id}`;
+  // const str = `http://localhost:4000/api/recipes/${id}`;
+  const str = `https://dbms-project-e4a5.onrender.com/api/recipes/${id}`;
   return axios.get(str);
 }
 

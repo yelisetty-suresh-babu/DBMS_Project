@@ -14,7 +14,8 @@ function Horizontal_card(props) {
     console.log(name);
   }, []);
   const delete_recipe = async () => {
-    const res = await axios.post("http://localhost:4000/api/recipes/delete", {
+    // const res = await axios.post("http://localhost:4000/api/recipes/delete", {
+    const res = await axios.post("https://dbms-project-e4a5.onrender.com/api/recipes/delete", {
       Name: name,
     });
     console.log(res);

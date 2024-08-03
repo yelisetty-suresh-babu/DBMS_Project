@@ -27,7 +27,8 @@ function AddRecipe() {
      
       const t = url_;
       axios
-        .post("http://localhost:4000/api/recipes/add", {
+        // .post("http://localhost:4000/api/recipes/add", {
+        .post("https://dbms-project-e4a5.onrender.com/api/recipes/add", {
           Name: name,
           url: t,
           type: stat,

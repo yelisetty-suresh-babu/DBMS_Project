@@ -22,7 +22,8 @@ function ByIngredient() {
       setLoading(true);
       console.log(ingredients);
       const res = await axios.post(
-        "http://localhost:4000/api/recipes/ingredient",
+        // "http://localhost:4000/api/recipes/ingredient",
+        "https://dbms-project-e4a5.onrender.com/api/recipes/ingredient",
         {
           ingredient: ingredients,
         }
