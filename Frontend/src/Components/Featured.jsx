@@ -7,7 +7,6 @@ export function loader() {
 }
 
 function Featured() {
-  
   const [recipes, setRecipe] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -31,6 +30,7 @@ function Featured() {
               Name={data.Name}
               url={data.url}
               val={data._id}
+              ty={data.type}
             />
           ))}
         </div>

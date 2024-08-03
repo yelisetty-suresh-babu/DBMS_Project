@@ -15,7 +15,7 @@ function ByIngredient() {
     let arr = text.split(",");
     arr = arr.map((str) => str.trim());
     setIngredients(arr);
-    setSubmit(true);
+    setSubmit((val) => val ^ 1);
   };
   useEffect(() => {
     const temp = async () => {
@@ -30,10 +30,11 @@ function ByIngredient() {
       console.log(res.data);
       setRecipes(res.data);
       setLoading(false);
+      setSubmit(false);
     };
 
     temp();
-  }, [ingredients]);
+  }, [submit]);
   return (
     <>
       <form
@@ -49,7 +50,7 @@ function ByIngredient() {
           name="temp_val"
         />
       </form>
-      {submit ? (
+      {submit || recipes ? (
         <>
           <div className="grid grid-cols-3 self-center ml-10">
             {recipes.map((data) => {
@@ -59,6 +60,7 @@ function ByIngredient() {
                   Name={data.Name}
                   url={data.url}
                   val={data._id}
+                  ty={data.type}
                 />
               );
             })}
@@ -66,7 +68,8 @@ function ByIngredient() {
         </>
       ) : (
         <div className="h-[200px]"></div>
-      )}
+      )}4
+      <div className="h-[330px]"></div>
     </>
   );
 }

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Fade from "react-reveal";
 import { Link } from "react-router-dom";
 
 function Card(prop) {
+  useEffect(() => {
+    console.log(prop);
+  }, []);
   const link_to = `/recipe/${prop.val}`;
   return (
     <Link to={link_to} key={prop.Name}>
@@ -11,7 +14,7 @@ function Card(prop) {
           <img src={prop.url} className="h-3/4 w-3/4 rounded-3xl shadow-lg" />
           <div className="p-4">
             <p className="font-serif text-lg"> {prop.Name}</p>
-            <p className="font-serif text-md">Non-Veg</p>
+            <p className="font-serif text-md">{prop.ty}</p>
           </div>
         </div>
       </Fade>

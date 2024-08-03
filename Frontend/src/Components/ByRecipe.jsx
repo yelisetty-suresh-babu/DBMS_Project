@@ -10,7 +10,8 @@ function ByRecipe() {
   const [submit, setSubmit] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmit(true);
+
+    setSubmit((val) => val ^ 1);
   };
   useEffect(() => {
     const temp = async () => {
@@ -18,7 +19,9 @@ function ByRecipe() {
         Name: text,
       });
       setRecipes(res.data);
+      // setText("");
       console.log(res.data);
+      setSubmit(false);
     };
     temp();
   }, [submit]);
@@ -37,7 +40,7 @@ function ByRecipe() {
           name="temp_val"
         />
       </form>
-      {submit ? (
+      {submit || recipes ? (
         <>
           <div className="grid grid-cols-3 self-center ml-10">
             {recipes.map((data) => {
@@ -47,6 +50,7 @@ function ByRecipe() {
                   Name={data.Name}
                   url={data.url}
                   val={data._id}
+                  ty={data.type}
                 />
               );
             })}
@@ -60,3 +64,5 @@ function ByRecipe() {
 }
 
 export default ByRecipe;
+
+

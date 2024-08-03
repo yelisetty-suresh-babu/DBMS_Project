@@ -21,7 +21,7 @@ function RecipeDisplay() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log("loader data");
+    console.log(vals);
 
     // window.location.reload()
   });
@@ -34,7 +34,7 @@ function RecipeDisplay() {
       localStorage.setItem("hasReloaded", "true");
       window.location.reload();
     }
-    console.log(vals.procedure[0].split("\n"));
+    // console.log(vals.procedure[0].split("\n"));
   }, []);
 
   // useEffect(() => {
@@ -43,7 +43,7 @@ function RecipeDisplay() {
   //   const str = `http://localhost:4000/api/recipes/${id}`;
   //   const temp = async () => {
   //     const res = await axios.get(str);
-  //     vals = res;
+
 
   //     setRecipe(res.data);
   //     setIngredients(res.data.ingredients);
