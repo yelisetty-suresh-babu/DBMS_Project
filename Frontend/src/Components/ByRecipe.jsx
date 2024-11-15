@@ -15,8 +15,8 @@ function ByRecipe() {
   };
   useEffect(() => {
     const temp = async () => {
-      // const res = await axios.post("http://localhost:4000/api/recipes/name", {
-      const res = await axios.post("https://dbms-project-e4a5.onrender.com/api/recipes/name", {
+      const res = await axios.post("http://localhost:4000/api/recipes/name", {
+        // const res = await axios.post("https://dbms-project-e4a5.onrender.com/api/recipes/name", {
         Name: text,
       });
       setRecipes(res.data);
@@ -65,5 +65,3 @@ function ByRecipe() {
 }
 
 export default ByRecipe;
-
-
